@@ -50,6 +50,7 @@ local function OnEditFocusGained( self )
 end
 
 local function OnTextChanged( self )
+	if not self:HasFocus() then return end
 	local text = self:GetText()
 	local parent = self:GetParent()
 	if parent.OnTextChanged and text ~= self.currText then
@@ -89,15 +90,11 @@ local function OnReceiveDrag( self )
 	end
 end
 
-local function OnClick( self )
-	return OnEnterPressed( self:GetParent().editbox )
-end
-
 local function SetValue( self, text )
 	return self.editbox:SetText( text )
 end
 
-function lib.CreateEditBox( parent, name, maxLetters, noButton )
+function lib.CreateEditBox( parent, name, desc, maxLetters )
 	local frame = CreateFrame( "Frame", nil, parent )
 	frame:SetWidth( 144 )
 	frame:SetHeight( 42 )
@@ -107,16 +104,9 @@ function lib.CreateEditBox( parent, name, maxLetters, noButton )
 --	bg:SetTexture(0, 0, 0)
 --	frame.bg = bg
 
-	local button = CreateButton( frame, OKAY )
-	button:SetWidth( 24 )
-	button:SetScript( "OnClick", OnClick )
-	button:Disable()
-	if noButton then button:Hide() end
-	frame.button = button
-
 	local editbox = CreateFrame( "EditBox", nil, frame )
 	editbox:SetPoint( "LEFT", 5, 0 )
-	editbox:SetPoint( "RIGHT", button, "LEFT", -5, 0 )
+	editbox:SetPoint( "RIGHT", -5, 0 )
 	editbox:SetHeight( 19 )
 	editbox:EnableMouse( true )
 	editbox:SetAutoFocus( false )
@@ -159,9 +149,7 @@ function lib.CreateEditBox( parent, name, maxLetters, noButton )
 	label:SetText( name )
 	frame.label = label
 
-	frame.noButton = noButton
-
-	frame.SetValue = SetValue
+	frame.SetText = editbox.SetText
 
 	return frame
 end
