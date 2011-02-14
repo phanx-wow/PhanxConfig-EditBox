@@ -142,9 +142,9 @@ function lib.CreateEditBox( parent, name, desc, maxLetters )
 	editbox.bgMiddle:SetTexture( [[Interface\Common\Common-Input-Border]] )
 	editbox.bgMiddle:SetTexCoord( 0.0625, 0.9375, 0, 0.625 )
 
-	local label = slider:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
-	label:SetPoint( "BOTTOMLEFT", slider, "TOPLEFT" )
-	label:SetPoint( "BOTTOMRIGHT", slider, "TOPRIGHT" )
+	local label = editbox:CreateFontString( nil, "ARTWORK", "GameFontNormal" )
+	label:SetPoint( "BOTTOMLEFT", editbox, "TOPLEFT" )
+	label:SetPoint( "BOTTOMRIGHT", editbox, "TOPRIGHT" )
 	label:SetJustifyH( "LEFT" )
 	label:SetText( name )
 	frame.label = label
