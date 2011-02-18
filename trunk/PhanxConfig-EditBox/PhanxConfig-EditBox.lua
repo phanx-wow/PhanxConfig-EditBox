@@ -95,7 +95,7 @@ local function SetValue( self, text )
 end
 
 function lib.CreateEditBox( parent, name, desc, maxLetters )
-	assert( type(parent) == "table" and parent.GetFrameType, "PhanxConfig-EditBox: Parent is not a valid frame!" )
+	assert( type(parent) == "table" and parent.CreateFontString, "PhanxConfig-EditBox: Parent is not a valid frame!" )
 	if type(name) ~= "string" then name = nil end
 	if type(desc) ~= "string" then desc = nil end
 	if type(maxLetters) ~= "number" then maxLetters = nil end
