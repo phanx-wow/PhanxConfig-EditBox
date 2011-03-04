@@ -154,6 +154,7 @@ function lib.CreateEditBox( parent, name, desc, maxLetters )
 	label:SetText( name )
 	frame.label = label
 
+	frame.desc = desc
 	frame.SetText = editbox.SetText
 
 	return frame
