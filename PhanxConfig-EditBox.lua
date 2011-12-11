@@ -57,7 +57,7 @@ local function OnTextChanged( self )
 		parent:OnTextChanged( text )
 		self.currText = text
 	end
-	self.button:Enable()
+--	self.button:Enable()
 end
 
 local function OnEnterPressed( self )
@@ -67,13 +67,13 @@ local function OnEnterPressed( self )
 	end
 	self:ClearFocus()
 	self.currText = nil
-	parent.button:Disable()
+--	parent.button:Disable()
 end
 
 local function OnEscapePressed( self )
 	self:ClearFocus()
 	self.currText = nil
-	self:GetParent().button:Disable()
+--	self:GetParent().button:Disable()
 end
 
 local function OnReceiveDrag( self )
