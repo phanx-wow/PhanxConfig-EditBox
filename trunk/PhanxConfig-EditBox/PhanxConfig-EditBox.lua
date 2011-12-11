@@ -90,7 +90,7 @@ local function OnReceiveDrag( self )
 	end
 end
 
-local function SetValue( self, text )
+local function SetText( self, text )
 	return self.editbox:SetText( text )
 end
 
@@ -155,7 +155,7 @@ function lib.CreateEditBox( parent, name, desc, maxLetters )
 	frame.label = label
 
 	frame.desc = desc
-	frame.SetText = editbox.SetText
+	frame.SetText = SetText
 
 	return frame
 end
