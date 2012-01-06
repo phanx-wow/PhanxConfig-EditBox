@@ -11,7 +11,7 @@
 local CreateButton = LibStub( "PhanxConfig-Button", true ) and LibStub( "PhanxConfig-Button" ).CreateButton
 assert( CreateButton, "PhanxConfig-EditBox requires PhanxConfig-Button!" )
 
-local MINOR_VERSION = tonumber( string.match( "$Revision: 28 $", "%d+" ) )
+local MINOR_VERSION = tonumber( string.match( "$Revision: 29 $", "%d+" ) )
 
 local lib, oldminor = LibStub:NewLibrary( "PhanxConfig-EditBox", MINOR_VERSION )
 if not lib then return end
@@ -44,36 +44,43 @@ local function OnLeave()
 	GameTooltip:Hide()
 end
 
-local function OnEditFocusGained( self )
-	self.currText = self:GetText()
+local function OnEditFocusGained( self ) -- print("OnEditFocusGained")
+	local text = self:GetText()
+	self.currText, self.origText = text, text
 	self:HighlightText()
+end
+
+local function OnEditFocusLost( self ) -- print("OnEditFocusLost")
+	self:SetText(self.origText or "")
+	self.currText, self.origText = nil, nil
 end
 
 local function OnTextChanged( self )
 	if not self:HasFocus() then return end
+
 	local text = self:GetText()
+	if text:len() == 0 then text = nil end -- experimental
+
 	local parent = self:GetParent()
 	if parent.OnTextChanged and text ~= self.currText then
 		parent:OnTextChanged( text )
 		self.currText = text
 	end
---	self.button:Enable()
 end
 
-local function OnEnterPressed( self )
+local function OnEnterPressed( self ) -- print("OnEnterPressed")
+	local text = self:GetText()
+	if text:len() == 0 then text = nil end -- experimental
+	self:ClearFocus()
+
 	local parent = self:GetParent()
 	if parent.OnValueChanged then
-		parent:OnValueChanged( self:GetText() )
+		parent:OnValueChanged( text )
 	end
-	self:ClearFocus()
-	self.currText = nil
---	parent.button:Disable()
 end
 
-local function OnEscapePressed( self )
+local function OnEscapePressed( self ) -- print("OnEscapePressed")
 	self:ClearFocus()
-	self.currText = nil
---	self:GetParent().button:Disable()
 end
 
 local function OnReceiveDrag( self )
@@ -123,13 +130,15 @@ function lib.CreateEditBox( parent, name, desc, maxLetters )
 	editbox:SetScript( "OnEditFocusGained", OnEditFocusGained )
 	editbox:SetScript( "OnTextChanged", OnTextChanged )
 	editbox:SetScript( "OnEnterPressed", OnEnterPressed )
+	editbox:SetScript( "OnTabPressed", OnEnterPressed )
 	editbox:SetScript( "OnEscapePressed", OnEscapePressed )
+	editbox:SetScript( "OnEditFocusLost", OnEditFocusLost )
 	editbox:SetScript( "OnReceiveDrag", OnReceiveDrag )
 	lib.editboxes[ #lib.editboxes + 1 ] = editbox
 	frame.editbox = editbox
 
 	editbox.bgLeft = editbox:CreateTexture( nil, "BACKGROUND" )
-	editbox.bgLeft:SetPoint( "LEFT", -5, 0 )
+	editbox.bgLeft:SetPoint( "LEFT", 0, 0 )
 	editbox.bgLeft:SetSize( 8, 20 )
 	editbox.bgLeft:SetTexture( [[Interface\Common\Common-Input-Border]] )
 	editbox.bgLeft:SetTexCoord( 0, 0.0625, 0, 0.625 )
