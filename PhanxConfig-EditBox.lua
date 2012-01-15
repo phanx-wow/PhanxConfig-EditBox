@@ -8,9 +8,6 @@
 	its internals may change at any time without notice.
 ----------------------------------------------------------------------]]
 
-local CreateButton = LibStub( "PhanxConfig-Button", true ) and LibStub( "PhanxConfig-Button" ).CreateButton
-assert( CreateButton, "PhanxConfig-EditBox requires PhanxConfig-Button!" )
-
 local MINOR_VERSION = tonumber( string.match( "$Revision: 29 $", "%d+" ) )
 
 local lib, oldminor = LibStub:NewLibrary( "PhanxConfig-EditBox", MINOR_VERSION )
