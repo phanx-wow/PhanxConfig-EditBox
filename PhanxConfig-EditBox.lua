@@ -8,7 +8,7 @@
 	its internals may change at any time without notice.
 ----------------------------------------------------------------------]]
 
-local MINOR_VERSION = tonumber( string.match( "$Revision: 29 $", "%d+" ) )
+local MINOR_VERSION = tonumber( string.match( "$Revision$", "%d+" ) )
 
 local lib, oldminor = LibStub:NewLibrary( "PhanxConfig-EditBox", MINOR_VERSION )
 if not lib then return end
