@@ -104,8 +104,11 @@ local methods = {}
 function methods:GetText()
 	return self.editbox:GetText()
 end
-function methods:SetTooltipText(text)
+function methods:SetText(text)
 	return self.editbox:SetText(text)
+end
+function methods:SetFormattedText(text, ...)
+	return self.editbox:SetFormattedText(text)
 end
 
 function methods:GetTooltipText()
