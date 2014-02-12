@@ -108,7 +108,7 @@ function methods:SetText(text)
 	return self.editbox:SetText(text)
 end
 function methods:SetFormattedText(text, ...)
-	return self.editbox:SetFormattedText(text)
+	return self.editbox:SetText(format(text, ...))
 end
 
 function methods:GetTooltipText()
