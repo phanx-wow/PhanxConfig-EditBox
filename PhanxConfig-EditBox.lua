@@ -110,15 +110,18 @@ function methods:SetFormattedText(text, ...)
 	return self.editbox:SetText(format(text, ...))
 end
 
-function methods:GetTooltipText()
-	return self.tooltipText
+function methods:GetLabel()
+	return self.labelText:GetText()
 end
-function methods:SetTooltipText(text)
-	self.tooltipText = text
+function methods:SetLabel(text)
+	self.labelText:SetText(text)
 end
 
-function methods:SetFunction(func)
-	self.func = func
+function methods:GetTooltip()
+	return self.tooltipText
+end
+function methods:SetTooltip(text)
+	self.tooltipText = text
 end
 
 ------------------------------------------------------------------------
@@ -173,7 +176,7 @@ function lib:New(parent, name, tooltipText, maxLetters)
 	label:SetPoint("BOTTOMLEFT", editbox, "TOPLEFT")
 	label:SetPoint("BOTTOMRIGHT", editbox, "TOPRIGHT")
 	label:SetJustifyH("LEFT")
-	frame.label = label
+	frame.labelText = label
 
 	for name, func in pairs(scripts) do
 		editbox:SetScript(name, func) -- NOT on the frame!
@@ -182,7 +185,7 @@ function lib:New(parent, name, tooltipText, maxLetters)
 		frame[name] = func
 	end
 
-	frame.label:SetText(name)
+	frame.labelText:SetText(name)
 	frame.tooltipText = tooltipText
 
 	return frame
