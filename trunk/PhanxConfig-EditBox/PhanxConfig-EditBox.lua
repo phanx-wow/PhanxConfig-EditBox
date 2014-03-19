@@ -61,8 +61,8 @@ function scripts:OnTextChanged()
 	if text:len() == 0 then text = nil end -- experimental
 
 	local parent = self:GetParent()
-	if parent.OnTextChanged and text ~= self.currText then
-		parent:OnTextChanged(text)
+	if parent.CallbackOnTextChanged and text ~= self.currText then
+		parent:CallbackOnTextChanged(text)
 		self.currText = text
 	end
 end
@@ -73,9 +73,8 @@ function scripts:OnEnterPressed() -- print("OnEnterPressed")
 	self:ClearFocus()
 
 	local parent = self:GetParent()
-	local func = parent.func or parent.OnValueChanged
-	if func then
-		func(parent, text)
+	if parent.Callback then
+		parent:Callback(text)
 	end
 end
 
