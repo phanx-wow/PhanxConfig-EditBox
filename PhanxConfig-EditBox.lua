@@ -34,10 +34,14 @@ end
 local scripts = {}
 
 function scripts:OnEnter()
-	local text = self:GetParent().tooltipText
+	local container = self:GetParent()
+	local text = container.tooltipText
 	if text then
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetText(text, nil, nil, nil, nil, true)
+		GameTooltip:SetOwner(container, "ANCHOR_RIGHT")
+		GameTooltip:AddLine(container.labelText:GetText(), nil, nil, nil, true)
+		GameTooltip:AddLine(container.tooltipText, 1, 1, 1, true)
+		GameTooltip:SetMinimumWidth(GameTooltipTextLeft1:GetStringWidth() + 21)
+		GameTooltip:Show()
 	end
 end
 local function OnLeave()
