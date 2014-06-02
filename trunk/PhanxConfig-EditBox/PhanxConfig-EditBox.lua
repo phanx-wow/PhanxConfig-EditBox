@@ -49,6 +49,7 @@ local function OnLeave()
 end
 
 function scripts:OnEditFocusGained() -- print("OnEditFocusGained")
+	CloseDropDownMenus()
 	local text = self:GetText()
 	self.currText, self.origText = text, text
 	self:HighlightText()
