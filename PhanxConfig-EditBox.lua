@@ -38,7 +38,7 @@
 	OTHER DEALINGS IN THE SOFTWARE.
 ----------------------------------------------------------------------]]
 
-local MINOR_VERSION = 176
+local MINOR_VERSION = 20141201
 
 local lib, oldminor = LibStub:NewLibrary("PhanxConfig-EditBox", MINOR_VERSION)
 if not lib then return end
@@ -92,7 +92,7 @@ function scripts:OnTextChanged()
 	if text:len() == 0 then text = nil end -- experimental
 
 	local parent = self:GetParent()
-	local callback = parent.CallbackOnTextChanged or parent.OnTextChanged
+	local callback = parent.OnTextChanged
 	if callback and text ~= self.currText then
 		callback(parent, text)
 		self.currText = text
@@ -105,7 +105,7 @@ function scripts:OnEnterPressed() -- print("OnEnterPressed")
 	self:ClearFocus()
 
 	local parent = self:GetParent()
-	local callback = parent.Callback or parent.OnValueChanged
+	local callback = parent.OnValueChanged
 	if callback then
 		callback(parent, text)
 	end
