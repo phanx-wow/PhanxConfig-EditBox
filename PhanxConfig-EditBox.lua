@@ -10,7 +10,7 @@
 	credits line -- any modified versions must be renamed to avoid conflicts.
 ----------------------------------------------------------------------]]
 
-local MINOR_VERSION = 20150112
+local MINOR_VERSION = 20150129
 
 local lib, oldminor = LibStub:NewLibrary("PhanxConfig-EditBox", MINOR_VERSION)
 if not lib then return end
@@ -49,14 +49,14 @@ end
 
 scripts.OnLeave = GameTooltip_Hide
 
-function scripts:OnEditFocusGained() print("OnEditFocusGained:", text)
+function scripts:OnEditFocusGained() --print("OnEditFocusGained:", text)
 	CloseDropDownMenus()
 	local text = self:GetValue()
 	self.currText, self.origText = text, text
 	self:HighlightText()
 end
 
-function scripts:OnEditFocusLost() print("OnEditFocusLost:", self.origText or "")
+function scripts:OnEditFocusLost() --print("OnEditFocusLost:", self.origText or "")
 	self:SetValue(self.origText or "")
 	self:HighlightText(0, 0)
 	self.currText, self.origText = nil, nil
@@ -65,7 +65,7 @@ end
 function scripts:OnTextChanged()
 	if not self:HasFocus() then return end
 
-	local text = self:GetValue() print("OnTextChanged:", text, "|", self.currText)
+	local text = self:GetValue() --print("OnTextChanged:", text, "|", self.currText)
 	if text == "" then text = nil end -- experimental
 
 	local callback = self.OnTextChanged
@@ -77,7 +77,7 @@ function scripts:OnTextChanged()
 end
 
 function scripts:OnEnterPressed()
-	local text = self:GetValue() print("OnEnterPressed:", text)
+	local text = self:GetValue() --print("OnEnterPressed:", text)
 	self.origText = text
 	self:ClearFocus()
 
@@ -88,7 +88,7 @@ function scripts:OnEnterPressed()
 	end
 end
 
-function scripts:OnEscapePressed() print("OnEscapePressed")
+function scripts:OnEscapePressed() --print("OnEscapePressed")
 	self:ClearFocus()
 end
 
@@ -151,15 +151,14 @@ function lib:New(parent, labelText, tooltipText, maxLetters, isNumeric)
 	local editbox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
 	tinsert(lib.editboxes, editbox)
 
-	editbox.Left:SetPoint("TOP")
-	editbox.Left:SetPoint("BOTTOM")
-	editbox.Left:SetPoint("LEFT", 0, 0)
-	editbox.Right:SetPoint("TOP")
-	editbox.Right:SetPoint("BOTTOM")
-	editbox.Right:SetPoint("RIGHT", 0, 0)
-	editbox.Middle:SetPoint("TOP")
-	editbox.Middle:SetPoint("BOTTOM")
-
+	editbox.Left:SetPoint("TOPLEFT")   editbox.Left:SetPoint("BOTTOMLEFT")
+	editbox.Right:SetPoint("TOPRIGHT") editbox.Right:SetPoint("BOTTOMRIGHT")
+	editbox.Middle:SetPoint("TOP")     editbox.Middle:SetPoint("BOTTOM")
+--[[
+	editbox.bg = editbox:CreateTexture(nil, "BACKGROUND")
+	editbox.bg:SetAllPoints(true)
+	editbox.bg:SetTexture(0, 0.5, 0, 0.25)
+]]
 	editbox:SetSize(180, 22)
 
 	editbox:EnableMouse(true)
